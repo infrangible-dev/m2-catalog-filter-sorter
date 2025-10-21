@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<!--
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <infrangible_catalogfiltersorter>
+            <general>
+                <direction>bottom</direction>
+                <show_toolbar>0</show_toolbar>
+            </general>
+        </infrangible_catalogfiltersorter>
+    </default>
+</config>
