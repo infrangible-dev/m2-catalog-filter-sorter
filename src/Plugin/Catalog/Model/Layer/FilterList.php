@@ -2,57 +2,58 @@
 
 declare(strict_types=1);
 
+/**
+ * @author      Andreas Knollmann
+ * @copyright   Copyright (c) 2014-2026 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
 namespace Infrangible\CatalogFilterSorter\Plugin\Catalog\Model\Layer;
 
 use Infrangible\CatalogFilterSorter\Model\Layer\Filter\Sorter;
-use Infrangible\Core\Helper\Instances;
+use Infrangible\CatalogFilterSorter\Model\Layer\Filter\SorterFactory;
 use Infrangible\Core\Helper\Stores;
 use Magento\Catalog\Model\Layer;
-use Magento\Catalog\Model\Layer\Filter\AbstractFilter;
+use Magento\Catalog\Model\Layer\FilterList as Subject;
 
 /**
- * @author      Andreas Knollmann
- * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
- * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ * Adds the sort options as first or last group to the layered navigation of category and search result pages.
  */
 class FilterList
 {
-    /** @var Instances */
-    protected $instanceHelper;
+    /** @var array<int, Sorter> the sort options by layer object */
+    private array $sorters = [];
 
-    /** @var Stores */
-    protected $storeHelper;
-
-    private $attributeSetFilter;
-
-    public function __construct(Instances $instanceHelper, Stores $storeHelper)
+    /**
+     * @param SorterFactory $sorterFactory
+     * @param Stores $storeHelper
+     */
+    public function __construct(protected SorterFactory $sorterFactory, protected Stores $storeHelper)
     {
-        $this->instanceHelper = $instanceHelper;
-        $this->storeHelper = $storeHelper;
     }
 
     /**
-     * @param array|AbstractFilter[] $result
+     * Adds the sort options to the filters of the layer.
      *
-     * @return array|AbstractFilter[]
+     * @param Subject $subject
+     * @param array $result
+     * @param Layer $layer
+     * @phpstan-param array<int, mixed> $result
+     *
+     * @return array
+     * @phpstan-return array<int, mixed>
      * @noinspection PhpUnusedParameterInspection
      */
-    public function afterGetFilters(Layer\FilterList $subject, array $result, Layer $layer): array
+    public function afterGetFilters(Subject $subject, array $result, Layer $layer): array
     {
-        if ($this->attributeSetFilter === null) {
-            $this->attributeSetFilter = $this->instanceHelper->getInstance(
-                Sorter::class,
-                ['layer' => $layer]
-            );
-        }
+        $layerId = spl_object_id($layer);
+
+        $this->sorters[ $layerId ] ??= $this->sorterFactory->create(['layer' => $layer]);
 
         if ($this->storeHelper->getStoreConfig('infrangible_catalogfiltersorter/general/direction') === 'top') {
-            array_unshift(
-                $result,
-                $this->attributeSetFilter
-            );
+            array_unshift($result, $this->sorters[ $layerId ]);
         } else {
-            $result[] = $this->attributeSetFilter;
+            $result[] = $this->sorters[ $layerId ];
         }
 
         return $result;

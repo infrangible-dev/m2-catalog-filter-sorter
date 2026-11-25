@@ -2,10 +2,10 @@
 
 <!--
  * @author      Andreas Knollmann
- * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @copyright   Copyright (c) 2014-2026 Softwareentwicklung Andreas Knollmann
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
 -->
-<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="layout_update.xsd">
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Infrangible_LayoutUpdate:etc/layout_update.xsd">
     <element name="div.sidebar.main">
         <update attributeName="htmlClass" action="suffix" type="string" ifConfig="infrangible_catalogfiltersorter/general/direction" configValue="top" sortOrder="10">sidebar-main-sorter-top</update>
         <update attributeName="htmlClass" action="suffix" type="string" ifConfig="infrangible_catalogfiltersorter/general/direction" configValue="bottom" sortOrder="10">sidebar-main-sorter-bottom</update>
