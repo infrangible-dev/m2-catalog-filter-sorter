@@ -1,11 +1,18 @@
 {
     "name": "infrangible/m2-catalog-filter-sorter",
-    "description": "Infrangible Magento 2 Catalog Filter Sorter",
+    "description": "Shows the product sort options as a \"Sort By\" group inside the layered navigation, so shoppers sort and filter in one place.",
     "type": "magento2-module",
     "version": "1.0.1",
     "license": "MIT",
     "keywords": [
-        "Magento"
+        "Magento",
+        "Magento 2",
+        "Adobe Commerce",
+        "Layered navigation",
+        "Catalog",
+        "Hyvä",
+        "sort options in layered navigation",
+        "sort by in the filter sidebar"
     ],
     "homepage": "https://github.com/infrangible-dev/m2-catalog-filter-sorter",
     "authors": [
